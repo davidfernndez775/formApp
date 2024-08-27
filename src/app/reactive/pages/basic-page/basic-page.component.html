@@ -63,3 +63,40 @@
     </form>
   </div>
 </div>
+
+<div class="row">
+  <div class="col">
+    <!-- Propiedades de los formularios -->
+
+    <span>Valid</span>
+    <!-- Devuelve si el formulario es válido(true) o no(false)-->
+    <pre>{{ myForm.valid | json }}</pre>
+
+    <span>Pristine</span>
+    <!-- Por defecto en true, si se escribe algo en algún campo del -->
+    <!-- formulario pasa a false -->
+    <pre>{{ myForm.pristine | json }}</pre>
+
+    <span>Touched</span>
+    <!-- Devuelve si el formulario ha sido tocado(true) o no(false) -->
+    <pre>{{ myForm.touched | json }}</pre>
+
+    <span>Value</span>
+    <!-- Devuelve un diccionario con los valores del producto -->
+    <pre>{{ myForm.value | json }}</pre>
+
+    <span>Precio</span>
+    <!-- Devuelve el valor de la clave precio -->
+    <pre>{{ myForm.controls["price"].value | json }}</pre>
+
+    <span>Precio - errors</span>
+    <!-- Devuelve los errores asociados a la clave precio -->
+    <pre>{{ myForm.controls["price"].errors | json }}</pre>
+
+    <span>Producto</span>
+    <pre>{{ myForm.controls["name"].value | json }}</pre>
+
+    <span>Producto - errors</span>
+    <pre>{{ myForm.controls["name"].errors | json }}</pre>
+  </div>
+</div>
