@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ValidatorsService } from '../../../shared/services/validators.service';
 
 @Component({
   templateUrl: './basic-page.component.html',
@@ -16,7 +17,10 @@ export class BasicPageComponent implements OnInit {
   });
 
   // inyectamos el servicio FormBuilder
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    private validatorsService: ValidatorsService
+  ) {}
 
   // supongamos que tenemos un backend que nos manda una info
   // para mostrarla en el formulario cuando se cargue la pagina
@@ -26,10 +30,7 @@ export class BasicPageComponent implements OnInit {
 
   // esta funcion sirve para chequear si hay errores en un campo y si ha sido tocado
   isValidField(field: string): boolean | null {
-    // devuelve una expresión para ser usada en un *ngIf
-    return (
-      this.myForm.controls[field].errors && this.myForm.controls[field].touched
-    );
+    return this.validatorsService.isValidField(this.myForm, field);
   }
 
   // funcion para determinar cuales son los errores y devolverlos mediante

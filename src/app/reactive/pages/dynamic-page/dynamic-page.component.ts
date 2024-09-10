@@ -6,6 +6,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { ValidatorsService } from '../../../shared/services/validators.service';
 
 @Component({
   templateUrl: './dynamic-page.component.html',
@@ -25,7 +26,10 @@ export class DynamicPageComponent {
   public newFavorite: FormControl = new FormControl('', [Validators.required]);
 
   // inyectamos el servicio FormBuilder
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    private validatorsService: ValidatorsService
+  ) {}
 
   // creamos un getter para obtener los juegos favoritos
   get favoriteGames() {
@@ -34,10 +38,7 @@ export class DynamicPageComponent {
 
   // esta funcion sirve para chequear si hay errores en un campo y si ha sido tocado
   isValidField(field: string): boolean | null {
-    // devuelve una expresión para ser usada en un *ngIf
-    return (
-      this.myForm.controls[field].errors && this.myForm.controls[field].touched
-    );
+    return this.validatorsService.isValidField(this.myForm, field);
   }
 
   // esta funcion sirve para chequear los errores en los campos dinamicos
