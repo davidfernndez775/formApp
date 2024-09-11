@@ -11,8 +11,22 @@ export class EmailValidator implements AsyncValidator {
   validate(control: AbstractControl): Observable<ValidationErrors | null> {
     const email = control.value;
     const callObservable = new Observable<ValidationErrors | null>(
-      (subscriber) => {}
-    );
+      (subscriber) => {
+        console.log({ email });
+        // chequeamos si el correo existe
+        if (email === 'panchovilla@gmail.com') {
+          // el suscriber es el equivalente a .subscribe
+          // el metodo next emite el siguiente valor
+          subscriber.next({ emailTaken: true });
+          // el metodo complete cierra el observable, ya no emite mas valores
+          // es el equivalente al return
+          subscriber.complete();
+        }
+        // si no existe
+        subscriber.next(null);
+        subscriber.complete();
+      }
+    ).pipe(delay(3000));
     return callObservable;
   }
 

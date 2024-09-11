@@ -1,5 +1,11 @@
 import { Injectable } from '@angular/core';
-import { FormControl, FormGroup, ValidationErrors } from '@angular/forms';
+import {
+  AbstractControl,
+  FormControl,
+  FormGroup,
+  ValidationErrors,
+} from '@angular/forms';
+import { notEqual } from 'assert';
 
 @Injectable({ providedIn: 'root' })
 export class ValidatorsService {
@@ -29,5 +35,25 @@ export class ValidatorsService {
   // funcion de validacion de campos
   public isValidField(form: FormGroup, field: string) {
     return form.controls[field].errors && form.controls[field].touched;
+  }
+
+  // funcion para comparar dos campos
+  public isFieldOneEqualFieldTwo(field1: string, field2: string) {
+    return (formGroup: AbstractControl): ValidationErrors | null => {
+      // se obtienen los valores de los campos
+      const fieldValue1 = formGroup.get(field1)?.value;
+      const fieldValue2 = formGroup.get(field2)?.value;
+
+      // se realiza la comparacion
+      if (fieldValue1 !== fieldValue2) {
+        // se escoge el campo que va a mostrar el error
+        formGroup.get(field2)?.setErrors({ notEqual: true });
+        return { notEqual: true };
+      }
+
+      // si no hay problemas
+      formGroup.get(field2)?.setErrors(null);
+      return null;
+    };
   }
 }
