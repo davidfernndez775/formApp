@@ -9,6 +9,7 @@ import { notEqual } from 'assert';
 
 @Injectable({ providedIn: 'root' })
 export class ValidatorsService {
+  // se introducen las expresiones regulares
   // en el caso del campo del nombre y apellido se usa una expresion regular
   public firstNameAndLastnamePattern: string = '([a-zA-Z]+) ([a-zA-Z]+)';
 

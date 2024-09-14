@@ -16,6 +16,7 @@
           />
           <!-- campo que muestra el mensaje de error si lo hubiera -->
           <span *ngIf="isValidField('name')" class="form-text text-danger">
+            <!-- se llama a esta funcion cuando haya mas de un error posible -->
             {{ getFieldError("name") }}
           </span>
         </div>

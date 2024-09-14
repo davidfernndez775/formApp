@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   FormArray,
   FormBuilder,
@@ -87,10 +87,13 @@ export class DynamicPageComponent {
   onAddToFavorites(): void {
     // chequeamos que la entrada no sea invalida
     if (this.newFavorite.invalid) return;
+
     // si es valido lo guardamos
     const newGame = this.newFavorite.value;
+
     // lo adicionamos al array a traves del formulario usando el formbuilder
     this.favoriteGames.push(this.fb.control(newGame, Validators.required));
+
     // borramos el valor en el campo
     this.newFavorite.reset();
   }
@@ -99,14 +102,19 @@ export class DynamicPageComponent {
   onSubmit(): void {
     // si el formulario es invalido
     if (this.myForm.invalid) {
+      console.log('es invalido');
       this.myForm.markAllAsTouched();
       return;
     }
-    // si es valido
+    // Imprime el valor de los favoritos antes del submit
+    console.log(this.favoriteGames);
     console.log(this.myForm.value);
-    // se borran los valores originales una vez que se hace el submit
-    (this.myForm.controls['favoriteGames'] as FormArray) = this.fb.array([]);
-    // se resetea el formulario
-    this.myForm.reset();
+    // Limpia los favoritos usando clear() para mantener la referencia del FormArray
+    this.favoriteGames.clear();
+    // Resetea el formulario sin perder la estructura
+    this.myForm.reset({
+      name: '', // Resetea el campo de nombre
+      favoriteGames: [], // Resetea el array de favoritos
+    });
   }
 }
